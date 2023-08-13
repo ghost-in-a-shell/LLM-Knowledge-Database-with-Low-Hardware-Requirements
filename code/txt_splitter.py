@@ -1,10 +1,24 @@
 from langchain.text_splitter import CharacterTextSplitter
-## 后期版本换成CharacterTextSplitter
-article_text = content_div.get_text()
+with open('./txt_srcfiles/hetangyuese.txt', encoding='utf-8') as f:
+
+    htys = f.read()
+
+## 后期版本换成CharacterTextSplitter"()
 text_splitter = CharacterTextSplitter(
-    # Set a really small chunk size, just to show.
-    chunk_size = 100,
+
+    # 这里设置了一个很小的chunk_size，只是为了演示。
+
+    chunk_size = 50,
+
     chunk_overlap  = 20,
+
     length_function = len,
+    separator='\n'
+
 )
-print("11111")
+
+texts = text_splitter.create_documents([htys])
+
+print(texts[0])
+
+print(texts[1])

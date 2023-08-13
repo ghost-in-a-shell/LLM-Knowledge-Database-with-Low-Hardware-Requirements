@@ -22,7 +22,3 @@ Therefore, the aim of this project is to enable every ordinary user to enjoy the
 本项目仍在开发中，请持续关注最新进展，欢迎学习交流。
 
 This project is still under development, so please stay tuned for the latest updates and feel free to engage in learning and discussions.
-
-如果想了解开发进展，请关注开发日志（dev_log.md）
-
-If you want to stay updated on the development progress, please follow the development log.（dev_log.md）
