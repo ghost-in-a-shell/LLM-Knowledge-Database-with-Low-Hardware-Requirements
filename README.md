@@ -22,3 +22,18 @@ Therefore, the aim of this project is to enable every ordinary user to enjoy the
 本项目仍在开发中，请持续关注最新进展，欢迎学习交流。
 
 This project is still under development, so please stay tuned for the latest updates and feel free to engage in learning and discussions.
+
+
+
+
+
+版本0.0.1（day3morning）
+
+实现了大模型知识库全流程成功运行。当前功能：输入一个pdf文档，回答相关问题。运行方法：python harness.py
+
+<img src=".\pics\yuanlitu.jpg" style="zoom: 25%;" />
+
+实现原理：
+
+使用Langchain开发，包括读取文件、分词、embedding、向量比较、套用prompt、大模型调用步骤。POE.py中为一个从poe.com获取数据的爬虫，用于实现大模型调用。embedding采用的是huggingface上的intfloat_multilingual-e5-base。
+
