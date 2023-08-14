@@ -3,7 +3,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 from langchain.vectorstores import Chroma
 from langchain.embeddings import HuggingFaceEmbeddings, SentenceTransformerEmbeddings
-
+import numpy as np
 import os
 import shutil
 
@@ -17,6 +17,17 @@ for filename in os.listdir(folder_path):
     elif os.path.isdir(file_path):
         shutil.rmtree(file_path)
 
+folder_path = "../arrays/"  # 文件夹的路径
+
+for filename in os.listdir(folder_path):
+    file_path = os.path.join(folder_path, filename)
+    if os.path.isfile(file_path):
+        os.remove(file_path)
+    elif os.path.isdir(file_path):
+        shutil.rmtree(file_path)
+
+
+
 print("loading source files...\t") 
 loader = PyPDFLoader("./srcfiles/test.pdf")
 pages = loader.load_and_split()
@@ -28,10 +39,15 @@ r_splitter = RecursiveCharacterTextSplitter(
     chunk_overlap=0,
     separators=["\n\n", "\n", "(?<=\. )","(?<=。)", " ", ""]
 )
-splits = r_splitter.split_documents(pages)
+splits = np.array(r_splitter.split_documents(pages))
+
+np.save('../arrays/splits.npy',splits )
+s=np.load('../arrays/splits.npy', allow_pickle=True)
+print(s)
 
 for i in range(len(splits)):
     splits[i].metadata["p_index"]=i
+
 
 print (len(splits))
 print("done!\n") 
@@ -64,8 +80,8 @@ for i in range(max(0,p_index-2),min(len(splits),p_index+3)):
 from POE import load_chat_id_map, clear_context, send_message, get_latest_message, set_auth
 
 #Auth
-set_auth('Quora-Formkey','079e38cd2d7160b85788dce23cb44d84')
-set_auth('Cookie','m-b=cH31MkXpc1WIbCRcgwHYwA==')
+set_auth('Quora-Formkey','xxx')
+set_auth('Cookie','xxx')
 bot='chinchilla'
 chat_id = load_chat_id_map(bot)
 clear_context(chat_id)
