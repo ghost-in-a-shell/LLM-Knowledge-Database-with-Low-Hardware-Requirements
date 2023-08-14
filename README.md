@@ -1,7 +1,7 @@
 # LLM-Knowledge-Database-with-Low-Hardware-Requirements
 LLM-Knowledge-Database-with-Low-Hardware-Requirements.
 
-前言
+## 前言
 
 Introduction
 
@@ -27,7 +27,7 @@ This project is still under development, so please stay tuned for the latest upd
 
 
 
-版本0.0.1（day3morning）
+## 版本0.0.1（day3morning）
 
 实现了大模型知识库全流程成功运行。当前功能：输入一个pdf文档，回答相关问题。运行方法：python harness.py
 
@@ -37,3 +37,21 @@ This project is still under development, so please stay tuned for the latest upd
 
 使用Langchain开发，包括读取文件、分词、embedding、向量比较、套用prompt、大模型调用步骤。POE.py中为一个从poe.com获取数据的爬虫，用于实现大模型调用。embedding采用的是huggingface上的intfloat_multilingual-e5-base。
 
+
+
+
+
+## 版本0.0.2（day3afternoon）
+
+相较于v0.0.1更**优雅**的实现，进行了函数封装等重构。同时新增了以下新功能：
+
+1. 实现了多个pdf文本的输入，同时能识别子文件夹下的文件
+2. 可以自定义问题，与机器人进行多轮对话
+
+运行方法：python harness.py
+
+variables里编辑变量
+
+llm_agent里编辑prompt
+
+聊天时使用!clear清除记录，使用!quit结束对话
