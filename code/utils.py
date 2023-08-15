@@ -1,6 +1,10 @@
 import os
 import shutil
 
+def error_handler(name,code):
+    print(name)
+    exit(code)
+
 def clear_folder(folder_path):
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
@@ -18,3 +22,20 @@ def find_file_type(path,type):
                 file_path = os.path.join(root, file_name)
                 res.append(file_path)
     return res
+
+def use_existing_data():
+    useornot=input("Use existing data？（Y/N） : ")
+    if useornot=="Y" or useornot=="y":
+        return True
+    if useornot=="N" or useornot=="n":
+        return False
+    else:
+        error_handler("NOT A PROPER SELECTION",666)
+
+def get_npy(path):
+    npylist=find_file_type(path,'npy')
+    if len(npylist) == 1:
+        unique_file_name = npylist[0]
+        return unique_file_name
+    else:
+        error_handler("ARRAY FOLDER CHAOS",777)

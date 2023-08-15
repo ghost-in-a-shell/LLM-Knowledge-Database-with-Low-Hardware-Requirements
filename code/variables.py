@@ -11,5 +11,5 @@ SPLITRCTS_SEPARATORS=["\n\n", "\n", "(?<=\. )","(?<=。)", " ", ""]
 
 #poe
 QUORA_FORMKEY='xxx'
-QUORA_COOKIES='xxx'
+QUORA_COOKIES='m-b=xxx'
 POE_BOT='chinchilla'

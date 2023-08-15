@@ -56,7 +56,7 @@ def llm_agent_start(split_filename,bot):
 
         feed_content=generate_feedcontent(question,split_filename)
         message=myprompt(question,feed_content)
-        #print(message)
+        print(message)
         send_message(message,bot,chat_id)
         reply = get_latest_message(bot)
         print(f"{bot} : {reply}")
