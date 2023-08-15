@@ -55,3 +55,11 @@ variables里编辑变量
 llm_agent里编辑prompt
 
 聊天时使用!clear清除记录，使用!quit结束对话
+
+
+
+## 版本0.0.3 （day4afternoon）
+
+新增了数据重用功能，如果选择重用数据会直接进入对话阶段
+
+运行方法同v0.0.2
