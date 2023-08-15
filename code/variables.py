@@ -9,6 +9,10 @@ SPLITRCTS_CHUNKSIZE=150
 SPLITRCTS_OVERLAP=0
 SPLITRCTS_SEPARATORS=["\n\n", "\n", "(?<=\. )","(?<=。)", " ", ""]
 
+#llm params
+NEAREST_K=5
+HALF_SEARCH_RANGE=3
+
 #poe
 QUORA_FORMKEY='xxx'
 QUORA_COOKIES='m-b=xxx'

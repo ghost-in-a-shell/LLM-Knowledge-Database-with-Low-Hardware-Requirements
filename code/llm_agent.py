@@ -2,14 +2,19 @@ import numpy as np
 from POE import load_chat_id_map, clear_context, send_message, get_latest_message, set_auth
 import variables
 import embedding_saving
+from utils import error_handler
 
 
 
 #########################################
 # change promp here!!
 #########################################
-def myprompt(question,feed_content):
+def askprompt(question,feed_content):
     message=f"从现在开始你是一个机器人客服，根据三重反引号分隔的文本中的内容，用中文回答三重中括号分隔的文本中的问题\n```{feed_content}```\n[[[{question}]]]"
+    return message
+
+def rejectprompt(question,feed_content):
+    message=f"根据三重反引号分隔的文本中的内容，判断是否可以正确地回答三重中括号分隔的文本中的问题，用一个字回答，只能回答是或否\n```{feed_content}```\n[[[{question}]]]"
     return message
 
 #########################################
@@ -21,14 +26,12 @@ def myprompt(question,feed_content):
 
 
 
-def generate_feedcontent(question,split_filename):
-    vectordb=embedding_saving.get_vectordb() 
-    splits=np.load(split_filename, allow_pickle=True)
-    comp_res = vectordb.similarity_search_with_score(question,k=3)
+def generate_feedcontent(question,vectordb,splits,index):
+    comp_res = vectordb.similarity_search_with_score(question,k=variables.NEAREST_K)
 
     feed_content=""
-    p_index=comp_res[0][0].metadata["p_index"]
-    for i in range(max(0,p_index-2),min(len(splits),p_index+3)):
+    p_index=comp_res[index][0].metadata["p_index"]
+    for i in range(max(0,p_index-variables.HALF_SEARCH_RANGE),min(len(splits),p_index+variables.HALF_SEARCH_RANGE+1)):
         feed_content+=splits[i].page_content
     #print(feed_content)
     return feed_content
@@ -43,7 +46,8 @@ def llm_agent_start(split_filename,bot):
     chat_id = load_chat_id_map(bot)
     clear_context(chat_id)
     print("Context is now cleared")
-
+    vectordb=embedding_saving.get_vectordb() 
+    splits=np.load(split_filename, allow_pickle=True)
     while True:
         question = input("Human : ")
         if question =="!quit":
@@ -53,10 +57,24 @@ def llm_agent_start(split_filename,bot):
             print("Context is now cleared")
             continue
         
-
-        feed_content=generate_feedcontent(question,split_filename)
-        message=myprompt(question,feed_content)
-        print(message)
-        send_message(message,bot,chat_id)
-        reply = get_latest_message(bot)
-        print(f"{bot} : {reply}")
+        flag_reply=False
+        for i in range(variables.NEAREST_K):
+            feed_content=generate_feedcontent(question,vectordb,splits,i)
+            message=rejectprompt(question,feed_content)
+            print(message)
+            send_message(message,bot,chat_id)
+            reply = get_latest_message(bot)
+            print("\n\n\n"+reply+"\n\n\n")
+            if reply=="否":
+                continue
+            elif reply=="是":
+                message=askprompt(question,feed_content)
+                send_message(message,bot,chat_id)
+                reply = get_latest_message(bot)
+                print(f"{bot} : {reply}")
+                flag_reply=True
+                break
+            else:
+                error_handler("JUDGE REPLY ERROR: "+reply,888)
+        if not flag_reply:
+            print(f"{bot} :抱歉，我无法回答")
