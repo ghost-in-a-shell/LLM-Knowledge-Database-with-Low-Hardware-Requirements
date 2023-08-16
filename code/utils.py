@@ -1,6 +1,7 @@
 import os
 import shutil
 
+
 def error_handler(name,code):
     print(name)
     exit(code)
@@ -39,3 +40,4 @@ def get_npy(path):
         return unique_file_name
     else:
         error_handler("ARRAY FOLDER CHAOS",777)
+

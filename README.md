@@ -1,5 +1,5 @@
 # LLM-Knowledge-Database-with-Low-Hardware-Requirements
-LLM-Knowledge-Database-with-Low-Hardware-Requirements.
+LLM-Knowledge-Database-with-Low-Hardware-Requirements.                                                                                      <img src=".\pics\degu.png" style="zoom:10%;" />
 
 ## 前言
 

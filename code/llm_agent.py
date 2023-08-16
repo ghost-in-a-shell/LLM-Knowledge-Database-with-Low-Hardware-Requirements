@@ -31,7 +31,10 @@ def generate_feedcontent(comp_res,splits,index):
     metadata=comp_res[index][0].metadata
     p_index=metadata["p_index"]
     sourcefile=metadata["source"].split("/")[-1]
-    page=metadata["page"]
+    if "page" not in metadata:
+        page='--'
+    else:
+        page=metadata["page"]
     for i in range(max(0,p_index-variables.HALF_SEARCH_RANGE),min(len(splits),p_index+variables.HALF_SEARCH_RANGE+1)):
         feed_content+=splits[i].page_content
     #print(feed_content)
@@ -75,7 +78,10 @@ def llm_agent_start(split_filename,bot):
                 message=askprompt(question,feed_content)
                 send_message(message,bot,chat_id)
                 reply = get_latest_message(bot)
-                print(f"{bot} : {reply}\n\t出处：{sourcefile}\t第{pageno}页附近")
+                if pageno!='--':
+                    print(f"{bot} : {reply}\n\t出处：{sourcefile}\t第{pageno}页附近")
+                else:
+                    print(f"{bot} : {reply}\n\t出处：{sourcefile}\t")
                 flag_reply=True
                 break
             else:

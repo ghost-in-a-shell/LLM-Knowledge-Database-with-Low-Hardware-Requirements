@@ -16,6 +16,9 @@ HALF_SEARCH_RANGE=3
 #debug
 DEBUG=False
 
+#input
+INUPT_TYPES=['pdf','docx','pptx','txt','md','png']
+
 #poe
 QUORA_FORMKEY='xxx'
 QUORA_COOKIES='m-b=xxx'
