@@ -14,7 +14,7 @@ def askprompt(question,feed_content):
     return message
 
 def rejectprompt(question,feed_content):
-    message=f"根据三重反引号分隔的文本中的内容，判断是否可以正确地回答三重中括号分隔的文本中的问题，用一个字回答，只能回答是或否\n```{feed_content}```\n[[[{question}]]]"
+    message=f"根据三重反引号分隔的文本中的内容，判断是否可以正确地回答三重中括号分隔的文本中的问题，不能涉及文本之外的知识，用一个字回答，只能回答是或否\n```{feed_content}```\n[[[{question}]]]"
     return message
 
 #########################################
@@ -26,15 +26,16 @@ def rejectprompt(question,feed_content):
 
 
 
-def generate_feedcontent(question,vectordb,splits,index):
-    comp_res = vectordb.similarity_search_with_score(question,k=variables.NEAREST_K)
-
+def generate_feedcontent(comp_res,splits,index):
     feed_content=""
-    p_index=comp_res[index][0].metadata["p_index"]
+    metadata=comp_res[index][0].metadata
+    p_index=metadata["p_index"]
+    sourcefile=metadata["source"].split("/")[-1]
+    page=metadata["page"]
     for i in range(max(0,p_index-variables.HALF_SEARCH_RANGE),min(len(splits),p_index+variables.HALF_SEARCH_RANGE+1)):
         feed_content+=splits[i].page_content
     #print(feed_content)
-    return feed_content
+    return feed_content,sourcefile,page
 
 def config_poe():
     set_auth('Quora-Formkey',variables.QUORA_FORMKEY)
@@ -59,19 +60,22 @@ def llm_agent_start(split_filename,bot):
         
         flag_reply=False
         for i in range(variables.NEAREST_K):
-            feed_content=generate_feedcontent(question,vectordb,splits,i)
+            comp_res = vectordb.similarity_search_with_score(question,k=variables.NEAREST_K)
+            feed_content,sourcefile,pageno=generate_feedcontent(comp_res,splits,i)
             message=rejectprompt(question,feed_content)
-            print(message)
+            if variables.DEBUG:
+                print(message)
             send_message(message,bot,chat_id)
             reply = get_latest_message(bot)
-            print("\n\n\n"+reply+"\n\n\n")
+            if variables.DEBUG:
+                print("\n\n\n"+reply+"\n\n\n")
             if reply=="否":
                 continue
             elif reply=="是":
                 message=askprompt(question,feed_content)
                 send_message(message,bot,chat_id)
                 reply = get_latest_message(bot)
-                print(f"{bot} : {reply}")
+                print(f"{bot} : {reply}\n\t出处：{sourcefile}\t第{pageno}页附近")
                 flag_reply=True
                 break
             else:

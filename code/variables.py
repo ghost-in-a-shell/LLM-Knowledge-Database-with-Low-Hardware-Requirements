@@ -13,6 +13,9 @@ SPLITRCTS_SEPARATORS=["\n\n", "\n", "(?<=\. )","(?<=。)", " ", ""]
 NEAREST_K=5
 HALF_SEARCH_RANGE=3
 
+#debug
+DEBUG=False
+
 #poe
 QUORA_FORMKEY='xxx'
 QUORA_COOKIES='m-b=xxx'

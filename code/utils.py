@@ -25,7 +25,7 @@ def find_file_type(path,type):
 
 def use_existing_data():
     useornot=input("Use existing data？（Y/N） : ")
-    if useornot=="Y" or useornot=="y":
+    if useornot=="Y" or useornot=="y" or useornot=="":
         return True
     if useornot=="N" or useornot=="n":
         return False
