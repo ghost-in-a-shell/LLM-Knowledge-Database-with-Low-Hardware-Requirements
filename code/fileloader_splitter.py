@@ -43,13 +43,13 @@ def fileloader_splitter(path):
             for file_path in filenamelist:
                 print("loading md file : "+str(file_path))
                 cur_pages=mdfileloader(file_path)
-                print(cur_pages)
+                #print(cur_pages)
                 all_files_pages+=cur_pages
         elif inputtype=='png':
             for file_path in filenamelist:
                 print("loading png file : "+str(file_path))
                 cur_pages=picfileloader(file_path)
-                print(cur_pages)
+                #print(cur_pages)
                 all_files_pages+=cur_pages
 
 
