@@ -1,4 +1,4 @@
-# LLM-Knowledge-Database-with-Low-Hardware-Requirements<img src=".\pics\degu.png"  align="right" style="margin-top: 10px;margin-right: 50px;" width = "200" height = "200"/>
+# LLM-Knowledge-Database-with-Low-Hardware-Requirements<img src=".\pics\degu.png"  align="right" style="margin-top: 10px;margin-right: 20px;" width = "150" height = "150"/>
 LLM-Knowledge-Database-with-Low-Hardware-Requirements.                                                                                   
 
 ## 前言
