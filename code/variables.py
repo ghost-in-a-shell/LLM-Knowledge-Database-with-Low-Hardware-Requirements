@@ -3,6 +3,7 @@ CHROMADB_PATH="../chroma_vectordb/"
 FILEARRAY_PATH="../arrays/"
 SRCFILE_PATH="./srcfiles/"
 EMBEDDING_PATH="../intfloat_multilingual-e5-base"
+COOKIE_PATH="./"
 
 #split params
 SPLITRCTS_CHUNKSIZE=150

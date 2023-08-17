@@ -1,5 +1,5 @@
-# LLM-Knowledge-Database-with-Low-Hardware-Requirements
-LLM-Knowledge-Database-with-Low-Hardware-Requirements.                                                                                      <img src=".\pics\degu.png" style="zoom:10%;" />
+# LLM-Knowledge-Database-with-Low-Hardware-Requirements<img src=".\pics\degu.png"  align="right" style="margin-top: 10px;margin-right: 20px;" width = "150" height = "150"/>
+LLM-Knowledge-Database-with-Low-Hardware-Requirements.                                                                                   
 
 ## 前言
 
@@ -87,3 +87,9 @@ llm_agent里编辑prompt
 主要更新：多模态文件输入功能，支持'pdf','docx','pptx','txt','md','png'多种类型的文件。后续可能的新文件类型包括url、youtube视频、bilibili视频等。这里的png指包含文字的图片，具体实现使用pytesseract库进行文字识别录入。
 
 其余小变动：新的环境文件；优化了print的内容。
+
+## 版本0.1.3 （day6afternoon）
+
+主要更新：知识库源文件夹支持增量扩展知识库，即增加新文件时不用全部embedding，只处理部分数据。减少文件或用户要求时才执行完整的start over。部分重构了切分文件和主文件的代码，更加模块化。新增了对比文件的util。
+
+其余小变动：新的可调整变量。
