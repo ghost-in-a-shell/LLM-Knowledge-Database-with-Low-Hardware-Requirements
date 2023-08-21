@@ -1,5 +1,5 @@
-# LLM-Knowledge-Database-with-Low-Hardware-Requirements
-LLM-Knowledge-Database-with-Low-Hardware-Requirements.
+# LLM-Knowledge-Database-with-Low-Hardware-Requirements<img src=".\pics\degu.png"  align="right" style="margin-top: 10px;margin-right: 20px;" width = "150" height = "150"/>
+LLM-Knowledge-Database-with-Low-Hardware-Requirements.                                                                                   
 
 ## 前言
 
@@ -81,3 +81,22 @@ llm_agent里编辑prompt
 主要更新：新增了引用功能，在给出回答的同时给出参考的源文件和页码。因为扩大搜索范围的影响，目前页码可能有最大2页左右的误差。该功能可辅助用户去查阅源文件获取更详细的信息，同时作为后续访问控制功能的基础。
 
 其余小变动：变量新增了DEBUG参数，可以选择是否开启调试输出；优化算法，避免了先前版本多次相似度匹配导致的高时间复杂度问题；修正了上一版本原理图中的错别字问题。
+
+## 版本0.1.2 （day5afternoon）
+
+主要更新：多模态文件输入功能，支持'pdf','docx','pptx','txt','md','png'多种类型的文件。后续可能的新文件类型包括url、youtube视频、bilibili视频等。这里的png指包含文字的图片，具体实现使用pytesseract库进行文字识别录入。
+
+其余小变动：新的环境文件；优化了print的内容。
+
+## 版本0.1.3 （day6afternoon）
+
+主要更新：知识库源文件夹支持增量扩展知识库，即增加新文件时不用全部embedding，只处理部分数据。减少文件或用户要求时才执行完整的start over。部分重构了切分文件和主文件的代码，更加模块化。新增了对比文件的util。
+
+其余小变动：新的可调整变量。
+
+## 版本0.1.4 （day8morning）
+
+主要更新：由于poe接口变动，原先的poe爬虫无法正常运行了。为了防止此类情况再次出现，此次版本更新去除了爬虫，新增了由@snowby666开发的poe-api-driver以及@ghost-in-a-shell开发的基于selenium的爬虫。速度较慢的selenium爬虫作为备份，未实际连接到主体代码。***注意：这意味着v0.1.3及之前版本代码无法正常运行！！！***后续会基于v0.1.1发布一个长期版用于prompt测试等。
+
+其余小变动：variables变动，使用新爬虫需要新的变量
+
