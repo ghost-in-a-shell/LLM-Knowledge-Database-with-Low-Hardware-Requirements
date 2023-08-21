@@ -3,7 +3,6 @@ CHROMADB_PATH="../chroma_vectordb/"
 FILEARRAY_PATH="../arrays/"
 SRCFILE_PATH="./srcfiles/"
 EMBEDDING_PATH="../intfloat_multilingual-e5-base"
-COOKIE_PATH="./"
 
 #split params
 SPLITRCTS_CHUNKSIZE=150
@@ -16,9 +15,6 @@ HALF_SEARCH_RANGE=3
 
 #debug
 DEBUG=False
-
-#input
-INUPT_TYPES=['pdf','docx','pptx','txt','md','png']
 
 #poe
 TOKEN="xxx"

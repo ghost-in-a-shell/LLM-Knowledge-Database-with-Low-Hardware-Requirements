@@ -18,9 +18,5 @@ def embedding_saving(splits):
     print("done!\n")
     return vectordb
 
-def update_db(splits,l):
-    if l!=0:
-        embedding_saving(splits[-l:])
-
 def get_vectordb():
     return Chroma(persist_directory=variables.CHROMADB_PATH, embedding_function=HuggingFaceEmbeddings(model_name=variables.EMBEDDING_PATH))
