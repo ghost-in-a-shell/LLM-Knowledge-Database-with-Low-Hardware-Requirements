@@ -21,6 +21,6 @@ DEBUG=False
 INUPT_TYPES=['pdf','docx','pptx','txt','md','png']
 
 #poe
-QUORA_FORMKEY='xxx'
-QUORA_COOKIES='m-b=xxx'
+TOKEN="xxx"
+CHAT_ID=60643403
 POE_BOT='chinchilla'
