@@ -1,8 +1,9 @@
 import numpy as np
-from poe_api_wrapper import PoeApi
+#from poe_api_wrapper import PoeApi
 import variables
 import embedding_saving
-from utils import error_handler
+from utils import error_handler,get_list_from_str
+import poe_llm
 
 
 
@@ -17,6 +18,9 @@ def rejectprompt(question,feed_content):
     message=f"根据四重反引号分隔的文本中的内容，判断是否可以正确地回答三重中括号分隔的文本中的问题，不能涉及文本之外的知识，用一个字回答，只能回答是或否\n````{feed_content}````\n[[[{question}]]]"
     return message
 
+def splitquestionprompt(question):
+    message=f"根据下面的内容，将内容分为多个独立的问题，存储在一个python list中。\n你只需要输出python list，不要输出其他内容\n-----\n{question}"
+    return message
 #########################################
 # / change promp here!!
 #########################################
@@ -40,13 +44,18 @@ def generate_feedcontent(comp_res,splits,index):
     #print(feed_content)
     return feed_content,sourcefile,page
 
+def split_question(client,chat_id,bot,question):
+    feed=splitquestionprompt(question)
+    reply=client.send_message(bot, feed, chatId=chat_id)
+    return get_list_from_str(reply)
+
 
 
 def llm_agent_start(split_filename,bot):
-    client = PoeApi(variables.TOKEN)
-    chat_id = variables.CHAT_ID
-    client.chat_break(bot, chatId=chat_id)
+    llm=poe_llm.PoeClient()
+    #client.chat_break(bot, chatId=chat_id)
     print("Context is now cleared")
+ 
     vectordb=embedding_saving.get_vectordb() 
     splits=np.load(split_filename, allow_pickle=True)
     
@@ -55,10 +64,10 @@ def llm_agent_start(split_filename,bot):
         if question =="!quit":
             break
         if question =="!clear":
-            client.chat_break(bot, chatId=chat_id)
-            print("Context is now cleared")
+            reply=llm(question)
+            print(f"{bot} : {reply}\t")
             continue
-        
+        #print(split_question(client,chat_id,bot,question))
         flag_reply=False
         for i in range(variables.NEAREST_K):
             comp_res = vectordb.similarity_search_with_score(question,k=variables.NEAREST_K)
@@ -66,15 +75,17 @@ def llm_agent_start(split_filename,bot):
             message=rejectprompt(question,feed_content)
             if variables.DEBUG:
                 print(message)
-            print (message,chat_id)
-            reply=client.send_message(bot, message, chatId=chat_id)
+            #print (message,chat_id)
+            #reply=client.send_message(bot, message, chatId=chat_id)
+            reply=llm(message)
             if variables.DEBUG:
                 print("\n\n\n"+reply+"\n\n\n")
             if reply=="否":
                 continue
             elif reply=="是":
                 message=askprompt(question,feed_content)
-                reply=client.send_message(bot, message, chatId=chat_id)
+                #reply=client.send_message(bot, message, chatId=chat_id)
+                reply=llm(message)
                 if pageno!='--':
                     print(f"{bot} : {reply}\n\t出处：{sourcefile}\t第{pageno}页附近")
                 else:

@@ -1,6 +1,7 @@
 import os
 import shutil
 import numpy as np
+import ast
 
 
 def error_handler(name,code):
@@ -98,3 +99,26 @@ def get_filelist_array(srcpath):
     return file_names_array
 
 
+def busy_wait():
+    i=1
+    while True:
+        i+=1
+
+def get_list_from_str(string):
+    # 寻找最后一个列表的起始位置和结束位置
+    start_index = string.rfind("[")
+    end_index = string.rfind("]")
+
+    # 确保找到的起始位置在最后一个结束位置之前
+    while start_index >= 0 and start_index > end_index:
+        start_index = string.rfind("[", 0, start_index - 1)
+
+    # 提取最后一个列表部分
+    list_string = string[start_index:end_index + 1]
+    if (list_string[-2]=='\\'):
+        list_string=list_string[:-2]+list_string[-1]
+
+    # 将列表字符串转换成实际的列表
+    my_list = ast.literal_eval(list_string)
+
+    return my_list
