@@ -11,8 +11,8 @@ SPLITRCTS_OVERLAP=0
 SPLITRCTS_SEPARATORS=["\n\n", "\n", "(?<=\. )","(?<=。)", " ", ""]
 
 #llm params
-NEAREST_K=5
-HALF_SEARCH_RANGE=3
+NEAREST_K=3
+HALF_SEARCH_RANGE=1
 
 #debug
 DEBUG=False
