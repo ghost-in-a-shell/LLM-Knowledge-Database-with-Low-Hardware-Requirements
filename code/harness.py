@@ -29,4 +29,5 @@ if not use_existing_data:
         split_filename=startover()
 else:
     split_filename=utils.get_npy(variables.FILEARRAY_PATH)
-llm_agent.llm_agent_start(split_filename,variables.POE_BOT)
+llma=llm_agent.llm_agent(split_filename,variables.POE_BOT)
+llma.run()

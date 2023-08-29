@@ -113,3 +113,11 @@ llm_agent里编辑prompt
 主要更新：reject方案废弃，改用all in one方案，把召回的文件片段整合成一个大的（文件名页码，片段）列表，套一层prompt，一起喂给llm。reject方案天生有诸多缺陷，例如容易触发llm的幻想问题、交互轮次多用时长、前后结果不匹配的问题。本次方案解决了困扰之前测试的痼疾。
 
 其余小变动：prompt.py文件统一管理prompt
+
+## 版本0.1.7
+
+主要更新：新增了基于streamlit 的UI，并将原本的llm封装成class，方便初始化和调用。ui现在只支持对话功能，读取文件、分词、embedding操作仍未开发。启动方式streamlit run st_test.py
+
+<img src=".\pics\ui.jpg" style="zoom: 50%;" />
+
+当前版本问题记录：embedding匹配仍不够精准，还需要优化；定位页码有的时候会多，但不会歪到其他文件；UI粗糙，无并发处理能力，多平台能力差。

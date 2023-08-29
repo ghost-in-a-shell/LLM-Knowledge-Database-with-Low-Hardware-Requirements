@@ -9,7 +9,7 @@ from langchain.cache import InMemoryCache
 
 logging.basicConfig(level=logging.INFO)
 # 启动llm的缓存
-langchain.llm_cache = InMemoryCache()
+#langchain.llm_cache = InMemoryCache()
 
 class PoeClient(LLM):
 
